@@ -9,9 +9,15 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String _imagem = "images/padrao.png";
-  String _resultado = "...";
+
+  String _ganhou = "";
+  String _empatou = "";
+  String _perdeu = "";
 
   void resultado(String jogada, String jogadaApp) {
+     _ganhou = "";
+     _empatou = "";
+     _perdeu = "";
     String _resultadoAux;
     if (jogada == jogadaApp) {
       _resultadoAux = "Empatado!";
@@ -23,7 +29,17 @@ class _HomeState extends State<Home> {
       _resultadoAux = "Derrota!";
     }
     setState(() {
-      _resultado = _resultadoAux;
+      switch (_resultadoAux) {
+        case "Vitória!":
+          _ganhou = "Vitória!";
+          break;
+        case "Empatado!":
+          _empatou = "Empatado!";
+          break;
+        case "Derrota!":
+          _perdeu = "Derrota!";
+          break;
+      }
     });
   }
 
@@ -41,7 +57,6 @@ class _HomeState extends State<Home> {
     setState(() {
       _imagem = "images/" + resultado + ".png";
     });
-
     return resultado;
   }
 
@@ -99,11 +114,13 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: EdgeInsets.all(30),
                 ),
-                Text("Resultado:"),
-                Padding(
-                  padding: EdgeInsets.all(10),
+
+                Text(_ganhou, style: TextStyle(color: Colors.greenAccent, fontSize: 30),
                 ),
-                Text(_resultado),
+                Text(_empatou,style: TextStyle(color: Colors.orange, fontSize: 30),
+                ),
+                Text(_perdeu,style: TextStyle(color: Colors.red, fontSize: 30),
+                ),
               ],
             )
           ],
