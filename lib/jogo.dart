@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -6,6 +8,43 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String _imagem = "images/padrao.png";
+  String _resultado = "...";
+
+  void resultado(String jogada, String jogadaApp) {
+    String _resultadoAux;
+    if (jogada == jogadaApp) {
+      _resultadoAux = "Empatado!";
+    } else if ((jogada == "pedra" && jogadaApp == "tesoura") ||
+        (jogada == "papel" && jogadaApp == "pedra") ||
+        (jogada == "tesoura" && jogadaApp == "papel")) {
+      _resultadoAux = "Vitória!";
+    } else {
+      _resultadoAux = "Derrota!";
+    }
+    setState(() {
+      _resultado = _resultadoAux;
+    });
+  }
+
+  void selecaoUsuario(String jogada) {
+    String jogadaApp = selecaoApp();
+    resultado(jogada, jogadaApp);
+    print("minha jogada: " + jogada);
+    print("jogada do App: " + jogadaApp);
+  }
+
+  String selecaoApp() {
+    Random num = new Random();
+    List<String> jogadas = ["pedra", "papel", "tesoura"];
+    String resultado = jogadas[num.nextInt(jogadas.length)];
+    setState(() {
+      _imagem = "images/" + resultado + ".png";
+    });
+
+    return resultado;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +67,7 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: EdgeInsets.all(10),
                 ),
-                Image.asset("images/padrao.png")
+                Image.asset(_imagem),
               ],
             ),
             Column(
@@ -43,12 +82,18 @@ class _HomeState extends State<Home> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Image.asset(
-                      "images/pedra.png",
-                      height: 90,
+                    GestureDetector(
+                      child: Image.asset("images/pedra.png", height: 90),
+                      onTap: () => selecaoUsuario("pedra"),
                     ),
-                    Image.asset("images/papel.png", height: 90),
-                    Image.asset("images/tesoura.png", height: 90)
+                    GestureDetector(
+                      child: Image.asset("images/papel.png", height: 90),
+                      onTap: () => selecaoUsuario("papel"),
+                    ),
+                    GestureDetector(
+                      child: Image.asset("images/tesoura.png", height: 90),
+                      onTap: () => selecaoUsuario("tesoura"),
+                    ),
                   ],
                 ),
                 Padding(
@@ -58,7 +103,7 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: EdgeInsets.all(10),
                 ),
-                Text("Aguardando Jogada!"),
+                Text(_resultado),
               ],
             )
           ],
