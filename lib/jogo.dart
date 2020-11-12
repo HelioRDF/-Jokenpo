@@ -9,15 +9,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String _imagem = "images/padrao.png";
-
   String _ganhou = "";
   String _empatou = "";
   String _perdeu = "";
 
   void resultado(String jogada, String jogadaApp) {
-     _ganhou = "";
-     _empatou = "";
-     _perdeu = "";
+    _ganhou = "";
+    _empatou = "";
+    _perdeu = "";
     String _resultadoAux;
     if (jogada == jogadaApp) {
       _resultadoAux = "Empatado!";
@@ -114,13 +113,23 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: EdgeInsets.all(30),
                 ),
-
-                Text(_ganhou, style: TextStyle(color: Colors.greenAccent, fontSize: 30),
-                ),
-                Text(_empatou,style: TextStyle(color: Colors.orange, fontSize: 30),
-                ),
-                Text(_perdeu,style: TextStyle(color: Colors.red, fontSize: 30),
-                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      _ganhou,
+                      style: TextStyle(color: Colors.greenAccent, fontSize: 30),
+                    ),
+                    Text(
+                      _empatou,
+                      style: TextStyle(color: Colors.orange, fontSize: 30),
+                    ),
+                    Text(
+                      _perdeu,
+                      style: TextStyle(color: Colors.red, fontSize: 30),
+                    ),
+                  ],
+                )
               ],
             )
           ],
